@@ -3,6 +3,8 @@ from django.contrib.auth.base_user import (
     AbstractBaseUser, BaseUserManager
 )
 from django.db.models.fields import EmailField
+from django.contrib.auth.models import PermissionsMixin
+
 
 # Create your models here.
 
@@ -26,17 +28,18 @@ class userManager(BaseUserManager):
         email = self.normalize_email(email)
         first_name = first_name[0].upper() + first_name[1:].lower()
         last_name = last_name[0].upper() + last_name[1:].lower()
-        user = self.model(email=email,first_name=first_name, last_name=last_name, is_active=True, is_staff=True)
+        user = self.model(email=email,first_name=first_name, last_name=last_name, is_active=True, is_staff=True, is_superuser=True)
         user.set_password(password)
         user.save()
         return user
     
-class users(AbstractBaseUser):
+class users(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     
     objects = userManager()
     
