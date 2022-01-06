@@ -1,8 +1,14 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Test
+from .models import timers
 
-class serializer(serializers.ModelSerializer):
+class timerCRUDSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Test
-        fields = ['Test']
+        model = timers
+        fields = ['start_time', 'label', 'user', 'end_time']
+        
+class timeNowSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = timers
+        fields = ['start_time', 'label', 'user', 'end_time']

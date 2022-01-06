@@ -141,8 +141,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',  # django-oauth-toolkit < 1.0.0
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',# SimpleJWT auth
-    )
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -156,6 +157,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 OAUTH2_PROVIDER = {
-    'ACCESS_TOKEN_EXPIRE_SECONDS': 1,
-    'REFRESH_TOKEN_EXPIRE_SECONDS': 10000,
+    'ROTATE_REFRESH_TOKEN': False,
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 180,
+    'REFRESH_TOKEN_EXPIRE_SECONDS': 86400,
+    'REFRESH_TOKEN_GRACE_PERIOD_SECONDS': 0,
 }
+
+# Need to use cron to run python manage.py cleartokens on server
