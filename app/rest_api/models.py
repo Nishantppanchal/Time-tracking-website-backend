@@ -1,15 +1,34 @@
 from django.db import models
+from django.db.models.fields import DateField, TextField
 from django.db.models.fields.related import ForeignKey
 from users.models import users
 import datetime
 # Create your models here.
     
-class labels(models.Model):
+class tags(models.Model):
     label = models.CharField(max_length=100, default=None, blank=True, null=True)
+    
     user = ForeignKey(users, on_delete=models.CASCADE)
     
-class timers(models.Model):
-    start_time = models.IntegerField()
-    end_time = models.IntegerField(default=None, blank=True, null=True)
-    label = models.ManyToManyField(labels)
+class clients(models.Model):
+    type = models.CharField(max_length=7, default='clients')
+    name = models.CharField(max_length=100)
+    colour = models.CharField(max_length=100)
+    
+    user = ForeignKey(users, on_delete=models.CASCADE)
+class projects(models.Model):
+    type = models.CharField(max_length=8, default='projects')
+    name = models.CharField(max_length=250)
+    colour = models.CharField(max_length=100)
+    
+    user = ForeignKey(users, on_delete=models.CASCADE)
+
+class logs(models.Model):
+    time = models.DurationField()
+    date = models.DateField()
+    description = TextField()
+    tags = models.ManyToManyField(tags)
+    
+    client = models.ForeignKey(clients, blank=True, null=True, on_delete=models.CASCADE)
+    project = models.ForeignKey(projects, blank=True, null=True, on_delete=models.CASCADE)
     user = ForeignKey(users, on_delete=models.CASCADE)

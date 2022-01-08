@@ -164,3 +164,4 @@ OAUTH2_PROVIDER = {
 }
 
 # Need to use cron to run python manage.py cleartokens on server
+# in production https://stackoverflow.com/questions/31507211/how-to-restrict-django-rest-framework-browsable-api-interface-to-admin-users
