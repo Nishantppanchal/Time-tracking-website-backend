@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import clientsCRUDSerializer, logsCRUDSerializer, projectsCRUDSerializer
+from .serializers import clientsCRUDSerializer, logsCRUDSerializer, projectsCRUDSerializer, clientProjectCRUDSerializer
 from .models import clients, logs, projects 
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework import viewsets
 from django.db.models import Q
 # Create your views here.
@@ -30,6 +30,17 @@ class projectsCRUD(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return projects.objects.filter(user=user)
+
+class clientProjectGet(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = clientProjectCRUDSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        clientsData = clients.objects.filter(user=user)
+        projectsData = projects.objects.filter(user=user)
+        data = list(clientsData) + list(projectsData)
+        return data
 
     
 # class timeNow(generics.ListAPIView):

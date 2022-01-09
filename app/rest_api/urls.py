@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
-from .views import clientsCRUD, logsCRUD, projectsCRUD
+from .views import clientProjectGet, clientsCRUD, logsCRUD, projectsCRUD
 
 router = DefaultRouter()
 router.register('logs', logsCRUD, basename='logsCRUD')
@@ -12,4 +12,5 @@ urlpatterns = [
     path('auth/', include('rest_framework_social_oauth2.urls')),
     # path('timerNow/', timeNow.as_view()),
     path('CRUD/', include(router.urls)),
+    path('clientProjectGet/', clientProjectGet.as_view()),
 ]

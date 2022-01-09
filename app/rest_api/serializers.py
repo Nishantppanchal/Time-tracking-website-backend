@@ -17,6 +17,10 @@ class projectsCRUDSerializer(serializers.ModelSerializer):
         model = projects
         fields = ['type', 'name', 'colour', 'user']        
     
+class clientProjectCRUDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = clients
+        fields = ['type', 'name', 'colour', 'user']   
     
     
 # class timeNowSerializer(serializers.ModelSerializer):

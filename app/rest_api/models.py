@@ -7,6 +7,7 @@ import datetime
     
 class tags(models.Model):
     label = models.CharField(max_length=100, default=None, blank=True, null=True)
+    billable = models.BooleanField()
     
     user = ForeignKey(users, on_delete=models.CASCADE)
     
@@ -27,8 +28,8 @@ class logs(models.Model):
     time = models.DurationField()
     date = models.DateField()
     description = TextField()
-    tags = models.ManyToManyField(tags)
     
+    tags = models.ManyToManyField(tags)
     client = models.ForeignKey(clients, blank=True, null=True, on_delete=models.CASCADE)
     project = models.ForeignKey(projects, blank=True, null=True, on_delete=models.CASCADE)
     user = ForeignKey(users, on_delete=models.CASCADE)
