@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
-from .models import logs, clients, projects
+from .models import logs, clients, projects, tags
 
 class logsCRUDSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +21,12 @@ class clientProjectCRUDSerializer(serializers.ModelSerializer):
     class Meta:
         model = clients
         fields = ['type', 'name', 'colour', 'user']   
+    
+class tagsCRUD(serializers.ModelSerializer):
+    class Meta:
+        model = tags
+        fields = ['label', 'billable', 'user']   
+    
     
     
 # class timeNowSerializer(serializers.ModelSerializer):
