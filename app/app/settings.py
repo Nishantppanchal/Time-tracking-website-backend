@@ -88,8 +88,18 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': 'postgres',
+
+        'USER': 'postgres',
+
+        'PASSWORD': 'wbFMM3GJE4d',
+
+        'HOST': 'localhost',
+
+        'PORT': '5432',
+
     }
 }
 
@@ -157,7 +167,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 OAUTH2_PROVIDER = {
-    'ROTATE_REFRESH_TOKEN': False,
+    'ROTATE_REFRESH_TOKEN': True,
     'ACCESS_TOKEN_EXPIRE_SECONDS': 180,
     'REFRESH_TOKEN_EXPIRE_SECONDS': 86400,
     'REFRESH_TOKEN_GRACE_PERIOD_SECONDS': 0,

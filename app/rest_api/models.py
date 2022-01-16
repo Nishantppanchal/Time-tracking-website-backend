@@ -6,7 +6,7 @@ import datetime
 # Create your models here.
     
 class tags(models.Model):
-    label = models.CharField(max_length=100, default=None, blank=True, null=True)
+    name = models.CharField(max_length=100, default=None, blank=True, null=True)
     billable = models.BooleanField()
     
     user = ForeignKey(users, on_delete=models.CASCADE)
@@ -25,7 +25,7 @@ class projects(models.Model):
     user = ForeignKey(users, on_delete=models.CASCADE)
 
 class logs(models.Model):
-    time = models.DurationField()
+    time = models.IntegerField()
     date = models.DateField()
     description = TextField()
     
