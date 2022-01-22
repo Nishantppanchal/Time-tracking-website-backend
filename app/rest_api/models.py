@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.fields import DateField, TextField
 from django.db.models.fields.related import ForeignKey
+from django.test import TestCase
 from users.models import users
 import datetime
 # Create your models here.
@@ -28,8 +29,9 @@ class logs(models.Model):
     time = models.IntegerField()
     date = models.DateField()
     description = TextField()
+    descriptionRaw = TextField()
     
-    tags = models.ManyToManyField(tags)
+    tags = models.ManyToManyField(tags, blank=True)
     client = models.ForeignKey(clients, blank=True, null=True, on_delete=models.CASCADE)
     project = models.ForeignKey(projects, blank=True, null=True, on_delete=models.CASCADE)
     user = ForeignKey(users, on_delete=models.CASCADE)

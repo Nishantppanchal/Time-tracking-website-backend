@@ -1,7 +1,7 @@
 from django.urls import path
 from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
-from .views import clientProjectGet, clientsCRUD, getID, logsCRUD, projectsCRUD, tagsCRUD
+from .views import clientProjectGet, clientsCRUD, logsCRUD, projectsCRUD, tagsCRUD, doesTagExist
 
 router = DefaultRouter()
 router.register('logs', logsCRUD, basename='logsCRUD')
@@ -14,5 +14,5 @@ urlpatterns = [
     # path('timerNow/', timeNow.as_view()),
     path('CRUD/', include(router.urls)),
     path('clientProjectGet/', clientProjectGet.as_view()),
-    path('getID/', getID.as_view()),
+    path('doesTagExist/', doesTagExist.as_view())
 ]

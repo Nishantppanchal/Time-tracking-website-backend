@@ -22,11 +22,13 @@ class tagsCRUDSerializer(serializers.ModelSerializer):
     class Meta:
         model = tags
         fields = ['id', 'name', 'billable', 'user']   
+        
     
 class tagIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = tags
         fields = ['id']
+        
 
 class clientIdSerializer(serializers.ModelSerializer):
     class Meta:

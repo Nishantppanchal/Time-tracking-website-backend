@@ -21,4 +21,4 @@ class createUserSerializer(serializers.ModelSerializer):
 class getUserIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = users
-        fields = ['id']  
+        fields = ['id']
