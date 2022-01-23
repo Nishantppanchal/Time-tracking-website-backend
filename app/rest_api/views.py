@@ -15,17 +15,21 @@ class logsCRUD(viewsets.ModelViewSet):
     serializer_class = logsCRUDSerializer
     
     def get_queryset(self):
+        number = self.request.query_params.get('number')
         user = self.request.user
-        number = int(self.request.query_params.get('number'))
-        start = number
-        end = number + 100
-        count = logs.objects.filter(user=user).count() - 1
-        if end <= count:
-            return logs.objects.filter(user=user).order_by('-date')[start:end]
-        elif start <= count:
-            return logs.objects.filter(user=user).order_by('-date')[start:]
+        
+        if number is None: 
+            return logs.objects.filter(user=user)
         else:
-            return logs.objects.filter(user=user).none()
+            start = int(number)
+            end = int(number) + 100
+            count = logs.objects.filter(user=user).count() - 1
+            if end <= count:
+                return logs.objects.filter(user=user).order_by('-date')[start:end]
+            elif start <= count:
+                return logs.objects.filter(user=user).order_by('-date')[start:]
+            else:
+                return logs.objects.filter(user=user).none()
     
     def create(self, request):
         serializer = logsCRUDSerializer(data=request.data)
