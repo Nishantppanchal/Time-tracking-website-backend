@@ -173,5 +173,8 @@ OAUTH2_PROVIDER = {
     'REFRESH_TOKEN_GRACE_PERIOD_SECONDS': 0,
 }
 
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost'] # change in production
+
 # Need to use cron to run python manage.py cleartokens on server
 # in production https://stackoverflow.com/questions/31507211/how-to-restrict-django-rest-framework-browsable-api-interface-to-admin-users

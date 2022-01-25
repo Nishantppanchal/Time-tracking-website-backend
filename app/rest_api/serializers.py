@@ -5,7 +5,7 @@ from .models import logs, clients, projects, tags
 class logsCRUDSerializer(serializers.ModelSerializer):
     class Meta:
         model = logs
-        fields = ['id', 'time', 'date', 'description', 'tags', 'client', 'project', 'user']
+        fields = ['id', 'time', 'date', 'description', 'descriptionRaw', 'tags', 'client', 'project', 'user']
         
 class clientsCRUDSerializer(serializers.ModelSerializer):
     class Meta:
