@@ -15,13 +15,11 @@ class tags(models.Model):
 class clients(models.Model):
     type = models.CharField(max_length=7, default='clients')
     name = models.CharField(max_length=100)
-    colour = models.CharField(max_length=100)
     
     user = ForeignKey(users, on_delete=models.CASCADE)
 class projects(models.Model):
     type = models.CharField(max_length=8, default='projects')
     name = models.CharField(max_length=250)
-    colour = models.CharField(max_length=100)
     
     user = ForeignKey(users, on_delete=models.CASCADE)
 

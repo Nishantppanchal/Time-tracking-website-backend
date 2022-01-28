@@ -10,12 +10,12 @@ class logsCRUDSerializer(serializers.ModelSerializer):
 class clientsCRUDSerializer(serializers.ModelSerializer):
     class Meta:
         model = clients
-        fields = ['id', 'type', 'name', 'colour', 'user']    
+        fields = ['id', 'type', 'name', 'user']    
         
 class projectsCRUDSerializer(serializers.ModelSerializer):
     class Meta:
         model = projects
-        fields = ['id', 'type', 'name', 'colour', 'user']        
+        fields = ['id', 'type', 'name', 'user']        
     
     
 class tagsCRUDSerializer(serializers.ModelSerializer):
