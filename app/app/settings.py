@@ -147,25 +147,34 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# Rest framework settings
 REST_FRAMEWORK = {
+    # Sets the authentication library
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',  # django-oauth-toolkit < 1.0.0
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
         'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
+    # Sets the documentation for the API
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
+# Allow all url to access the API
 CORS_ORIGIN_ALLOW_ALL = True
+# Allow for cookies to be used to authenication (not implement in this app)
 CORS_ALLOW_CREDENTIALS = True
 
+# Sets custom user model
 AUTH_USER_MODEL = 'users.users'
 
+# Defines authenication library used for authenication backends
 AUTHENTICATION_BACKENDS = (
    'rest_framework_social_oauth2.backends.DjangoOAuth2',
    'django.contrib.auth.backends.ModelBackend',
 )
 
+# Sets the authenication settings
 OAUTH2_PROVIDER = {
     'ROTATE_REFRESH_TOKEN': True,
     'ACCESS_TOKEN_EXPIRE_SECONDS': 180,
