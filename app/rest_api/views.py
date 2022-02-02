@@ -84,7 +84,9 @@ class clientsCRUD(viewsets.ModelViewSet):
         # If the data is serialisable
         if serializer.is_valid():
             # Save the data to the clients model
-            client = serializer.save()
+            serializer.save()
+            # Gets client created
+            client = serializer.data
             # Return the client created and a 201 created status code
             return Response(client, status=status.HTTP_201_CREATED)
         # If the data is not serialisable
@@ -112,7 +114,9 @@ class projectsCRUD(viewsets.ModelViewSet):
         # If the data is serialisable
         if serializer.is_valid():
             # Save the data to the projects model
-            project = serializer.save()
+            serializer.save()
+            # Gets project created
+            project = serializer.data
             # Return the client created and a 201 created status code
             return Response(project, status=status.HTTP_201_CREATED)
         # If the data is not serialisable

@@ -4,8 +4,7 @@ from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
 from .views import clientProjectGet, clientsCRUD, logsCRUD, projectsCRUD, tagsCRUD, doesTagExist
 
-# Sets app name
-app_name = 'rest_api'
+# Don't put app name as it causes errors
 
 # Use router to automatically generate CRUD urls
 router = DefaultRouter()
