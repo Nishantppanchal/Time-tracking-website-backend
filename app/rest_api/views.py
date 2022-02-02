@@ -60,9 +60,8 @@ class logsCRUD(viewsets.ModelViewSet):
             # Return the log created and a 201 created status code
             return Response(log, status=status.HTTP_201_CREATED)
         # If the data is not serialisable
-        else:
-            # Return the errors and a 400 bad request status code
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Return the errors and a 400 bad request status code
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 # View for clients CRUD
 class clientsCRUD(viewsets.ModelViewSet):
@@ -89,9 +88,8 @@ class clientsCRUD(viewsets.ModelViewSet):
             # Return the client created and a 201 created status code
             return Response(client, status=status.HTTP_201_CREATED)
         # If the data is not serialisable
-        else:
-            # Return the errors and a 400 bad request status code
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Return the errors and a 400 bad request status code
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # View for projects CRUD
 class projectsCRUD(viewsets.ModelViewSet):
@@ -118,9 +116,8 @@ class projectsCRUD(viewsets.ModelViewSet):
             # Return the client created and a 201 created status code
             return Response(project, status=status.HTTP_201_CREATED)
         # If the data is not serialisable
-        else:
-            # Return the errors and a 400 bad request status code
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Return the errors and a 400 bad request status code
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
    
 # View for tags CRUD
 class tagsCRUD(viewsets.ModelViewSet):
@@ -149,9 +146,8 @@ class tagsCRUD(viewsets.ModelViewSet):
             # Return the tag created and a 201 created status code
             return Response(tag, status=status.HTTP_201_CREATED)
         # If the data is not serialisable
-        else:
-            # Return the errors and a 400 bad request status code
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Return the errors and a 400 bad request status code
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
 
