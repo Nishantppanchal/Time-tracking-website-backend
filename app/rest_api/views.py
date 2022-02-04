@@ -21,6 +21,8 @@ class logsCRUD(viewsets.ModelViewSet):
         # Sets the user ID from the request
         user = self.request.user
         
+        print(user)
+        
         # If the number is None
         if number is None: 
             # Return all the logs in one go

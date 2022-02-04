@@ -23,7 +23,7 @@ class createUserSerializer(serializers.ModelSerializer):
     # Defines how to create a user instance with validated data 
     def create(self, validated_data):
         # Creates a user instance with validated data
-        user = users.objects.create(
+        user = users.objects.create_user(
             email = validated_data['email'],
             first_name = validated_data['first_name'], 
             last_name = validated_data['last_name'],

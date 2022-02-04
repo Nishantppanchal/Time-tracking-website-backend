@@ -21,7 +21,7 @@ class userManager(BaseUserManager):
         # Makes only the first letter of the last name upper case while the rest are lower case
         last_name = last_name[0].upper() + last_name[1:].lower()
         # Create a user instance with all the user's data
-        user = self.model(email=email,first_name=first_name, last_name=last_name, is_active=False, is_staff=False)
+        user = self.model(email=email,first_name=first_name, last_name=last_name, is_active=True, is_staff=False)
         # Sets the user password
         user.set_password(password)
         # Saves the user instance to the database
