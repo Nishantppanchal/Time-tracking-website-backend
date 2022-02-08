@@ -204,6 +204,5 @@ class doesTagExist(generics.GenericAPIView):
         # Return the data to the frontend
         return Response(data)
             
-    
-    
+
     
