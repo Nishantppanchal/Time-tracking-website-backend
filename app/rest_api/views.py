@@ -3,6 +3,7 @@ from urllib.parse import non_hierarchical
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
+from uritemplate import partial
 from .serializers import clientsCRUDSerializer, logsCRUDSerializer, projectsCRUDSerializer, tagsCRUDSerializer
 from .models import clients, logs, projects, tags
 from rest_framework.permissions import IsAuthenticated
@@ -71,8 +72,6 @@ class logsCRUD(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for clients CRUD
-
-
 class clientsCRUD(viewsets.ModelViewSet):
     # Requires authentication to access this endpoint
     permission_classes = [IsAuthenticated]
@@ -103,8 +102,6 @@ class clientsCRUD(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for projects CRUD
-
-
 class projectsCRUD(viewsets.ModelViewSet):
     # Requires authentication to access this endpoint
     permission_classes = [IsAuthenticated]
@@ -135,8 +132,6 @@ class projectsCRUD(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for tags CRUD
-
-
 class tagsCRUD(viewsets.ModelViewSet):
     # Requires authentication to access this endpoint
     permission_classes = [IsAuthenticated]
@@ -166,7 +161,6 @@ class tagsCRUD(viewsets.ModelViewSet):
         # Return the errors and a 400 bad request status code
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 # Creates a generic endpoint to get all the user's clients and projects
 class clientProjectGet(generics.GenericAPIView):
     # Requires authentication to access this endpoint
@@ -192,8 +186,6 @@ class clientProjectGet(generics.GenericAPIView):
         return Response(data, status=status.HTTP_200_OK)
 
 # Creates a generic endpoint to check whether a tag exists
-
-
 class doesTagExist(generics.GenericAPIView):
     # Requires authentication to access this endpoint
     permission_classes = [IsAuthenticated]
@@ -355,6 +347,5 @@ class generateReport(APIView):
         # Sets the tagTimes key in the responseData to the tagTimes array
         responseData['tagTimes'] = tagTimes
 
-        print(responseData)
         # Returns the data to the frontend
         return Response(responseData, status=status.HTTP_200_OK)
