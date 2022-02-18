@@ -63,9 +63,6 @@ class logs(models.Model):
     # Uses default datefield formating
     date = models.DateField()
     # Description field
-    # Stores description in readable format
-    # Textfield is used so their is no max character limit
-    description = TextField()
     # Dscription raw field
     # Stores stringified JS code for the description field
     descriptionRaw = TextField()

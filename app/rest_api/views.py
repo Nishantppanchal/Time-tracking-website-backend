@@ -251,13 +251,13 @@ class generateReport(APIView):
         if tags:
             # Filter for all the logs made by the user with the clients specificed and have the one of the tags specificed
             # Or the logs made by the user with the projects specificed and have one of the tags specificed
-            logsData = logs.objects.filter(user=user, client_id__in=clientIDs, tags_id__in=tagIDs) | logs.objects.filter(
-                user=user, project_id__in=projectIDs, tags_id__in=tagIDs)
+            logsData = logs.objects.filter(user=user, client_id__in=clientIDs, tags_id__in=tagIDs).order_by('date') | logs.objects.filter(
+                user=user, project_id__in=projectIDs, tags_id__in=tagIDs).order_by('date')
         # If are not any tags in the tags array
         else:
             # Filter for all the logs made by the user with the clients or projects specificed 
-            logsData = logs.objects.filter(user=user, client_id__in=clientIDs) | logs.objects.filter(
-                user=user, project_id__in=projectIDs)
+            logsData = logs.objects.filter(user=user, client_id__in=clientIDs).order_by('date') | logs.objects.filter(
+                user=user, project_id__in=projectIDs).order_by('date')
         
         # Find the total time for all the logs
         totalTime = logsData.aggregate(Sum('time'))['time__sum']

@@ -14,7 +14,7 @@ class logsCRUDSerializer(serializers.ModelSerializer):
         # Defines the table used by the serializer
         model = logs
         # Defines the fields to be serialised
-        fields = ['id', 'time', 'date', 'description', 'descriptionRaw', 'tags', 'client', 'project', 'user']
+        fields = ['id', 'time', 'date', 'descriptionRaw', 'tags', 'client', 'project', 'user']
         
 # Serializer for clients CRUD
 class clientsCRUDSerializer(serializers.ModelSerializer):
