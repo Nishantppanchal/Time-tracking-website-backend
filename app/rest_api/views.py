@@ -68,12 +68,12 @@ class logsCRUD(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # View for getting all logs
-class getAllLogs(APIView):
+class getAllLogs(generics.GenericAPIView):
         # Requires authentication to access this endpoint
     permission_classes = [IsAuthenticated]
 
     # Defines what happens on a get request
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         # Sets the user ID from the request
         user = request.user
         # Gets the user's logs
@@ -81,7 +81,7 @@ class getAllLogs(APIView):
         # Serialise the logs
         logsSerialised = logsCRUDSerializer(logsData, many=True)
         # Return all the logs and a 200 ok status code
-        return Response(logsSerialised, status=status.HTTP_200_OK);
+        return Response(logsSerialised.data, status=status.HTTP_200_OK);
 
 # View for clients CRUD
 class clientsCRUD(viewsets.ModelViewSet):

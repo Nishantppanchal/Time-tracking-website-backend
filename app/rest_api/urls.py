@@ -30,5 +30,5 @@ urlpatterns = [
     # URL to generate reports
     path('generateReport/', generateReport.as_view()),
     # URL to get all logs
-    path('getAllLogs', getAllLogs.as_view())
+    path('getAllLogs/', getAllLogs.as_view())
 ]
