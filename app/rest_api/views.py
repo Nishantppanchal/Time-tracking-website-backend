@@ -263,8 +263,8 @@ class generateReport(APIView):
         if tags:
             # Filter for all the logs made by the user with the clients specificed and have the one of the tags specificed
             # Or the logs made by the user with the projects specificed and have one of the tags specificed
-            logsData = logs.objects.filter(user=user, client_id__in=clientIDs, tags_id__in=tagIDs).order_by('date') | logs.objects.filter(
-                user=user, project_id__in=projectIDs, tags_id__in=tagIDs).order_by('date')
+            logsData = logs.objects.filter(user=user, client_id__in=clientIDs, tags__id__in=tagIDs).order_by('date') | logs.objects.filter(
+                user=user, project_id__in=projectIDs, tags__id__in=tagIDs).order_by('date')
         # If are not any tags in the tags array
         else:
             # Filter for all the logs made by the user with the clients or projects specificed 
@@ -341,7 +341,7 @@ class generateReport(APIView):
         # For each tag
         for tag in tags:
             # Get the time spent on the tag
-            tagTime = logsData.filter(tags_id=tag['id']).aggregate(Sum('time'))['time__sum']
+            tagTime = logsData.filter(tags__id=tag['id']).aggregate(Sum('time'))['time__sum']
             # If the time spent on the tag is None
             if tagTime == None:
                 # Set it to 0
@@ -350,7 +350,7 @@ class generateReport(APIView):
             # Add a dictionary to the tagTimes array
             tagTimes.append({
                 # Sets the id key to the id of the tag
-                'id': tags['id'],
+                'id': tag['id'],
                 # Sets the name key to the name of the tag
                 'name': tag['name'],
                 # Sets the time key to the amount of time spent on the tag
