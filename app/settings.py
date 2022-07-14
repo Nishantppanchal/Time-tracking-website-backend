@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wvu5xz7_-_ka#x6bb4r8h(mb(z&6b#=&^vxjwo@sjnjqybrgxg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['time-tracking-django.herokuapp.com', 'time-tracking-reactjs.herokuapp.com'] # change in production
+ALLOWED_HOSTS = ['time-tracking-django.herokuapp.com', 'time-tracking-reactjs.herokuapp.com', 'localhost', '127.0.0.1'] # change in production
 
 
 # Application definition

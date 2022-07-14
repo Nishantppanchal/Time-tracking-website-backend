@@ -236,7 +236,7 @@ class generateReport(APIView):
         # Sets the projects array from the request body
         projects = request.data['projects']
         # Sets the tags array from the request body
-        tags = request.data['tags']
+        tagsData = request.data['tags']
 
         # Extracts the ids from the the data sent over
         # Creates a variable to store the client ids
@@ -254,13 +254,13 @@ class generateReport(APIView):
         # Creates a variable to store the tag ids
         tagIDs = []
         # For all the tags
-        for tag in tags:
+        for tag in tagsData:
             # Add their ids to the tag IDs array
             tagIDs.append(tag['id'])
 
         # # # Add billable or not for each log -> if it has a not billable tag -> not billablec
         # If there are tags in the tags array
-        if tags:
+        if tagsData:
             # Filter for all the logs made by the user with the clients specificed and have the one of the tags specificed
             # Or the logs made by the user with the projects specificed and have one of the tags specificed
             logsData = logs.objects.filter(user=user, client_id__in=clientIDs, tags__id__in=tagIDs).order_by('date') | logs.objects.filter(
@@ -281,12 +281,24 @@ class generateReport(APIView):
         # Serialise the logs
         logsSerialised = logsCRUDSerializer(logsData, many=True)
 
+        logsSerialisedData = logsSerialised.data
+        for i in range(len(logsSerialisedData)):
+            logTags = logsSerialisedData[i]['tags']
+            print(logsSerialisedData[i])
+            print(logTags)
+            billable = True
+            for tagID in logTags:
+                print(tags.objects.get(user=user, id=tagID).billable)
+                if not tags.objects.get(user=user, id=tagID).billable:
+                    billable = False
+            logsSerialisedData[i]['billable'] = billable
+
         # Creates a responseData dictionary to return all the data
         responseData = {
             # Set the totalTime key to the totalTime for all the logs
             'totalTime': totalTime,
             # Set the logs key to all the logs 
-            'logs': logsSerialised.data,
+            'logs': logsSerialisedData,
         }
 
         # Create a variable to store the time spent on each client and project
@@ -339,7 +351,7 @@ class generateReport(APIView):
         # Creates a variable to store the time spent on each tag
         tagTimes = []
         # For each tag
-        for tag in tags:
+        for tag in tagsData:
             # Get the time spent on the tag
             tagTime = logsData.filter(tags__id=tag['id']).aggregate(Sum('time'))['time__sum']
             # If the time spent on the tag is None
@@ -350,7 +362,7 @@ class generateReport(APIView):
             # Add a dictionary to the tagTimes array
             tagTimes.append({
                 # Sets the id key to the id of the tag
-                'id': tags['id'],
+                'id': tag['id'],
                 # Sets the name key to the name of the tag
                 'name': tag['name'],
                 # Sets the time key to the amount of time spent on the tag
