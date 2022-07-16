@@ -3,7 +3,6 @@ from urllib.parse import non_hierarchical
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from uritemplate import partial
 from .serializers import clientsCRUDSerializer, logsCRUDSerializer, projectsCRUDSerializer, tagsCRUDSerializer
 from .models import clients, logs, projects, tags
 from rest_framework.permissions import IsAuthenticated
@@ -193,31 +192,6 @@ class clientProjectGet(generics.GenericAPIView):
         projectsSerialized = projectsCRUDSerializer(projectsData, many=True)
         # Combines the serializered data
         data = clientsSerialized.data + projectsSerialized.data
-
-        # Return the data to the frontend
-        return Response(data, status=status.HTTP_200_OK)
-
-# Creates a generic endpoint to check whether a tag exists
-class doesTagExist(generics.GenericAPIView):
-    # Requires authentication to access this endpoint
-    permission_classes = [IsAuthenticated]
-
-    # Defines what happens on a get request
-    def get(self, request):
-        # Sets the user ID from the request
-        user = request.user
-        # Sets the attribute name from the params in the URL
-        name = request.query_params.get('name')
-
-        # If a tag with the name specificed made by the user specificed exists
-        if tags.objects.filter(user=user, name=name).exists():
-            # Sets data to a dictionary with exists as true and the id as the tag id
-            # the [0] is to prevent accidential duplicates causing errors
-            data = {'exists': True, 'id': tags.objects.filter(user=user, name=name)[
-                0].id}
-        else:
-            # Sets data to a dictionary with exists as false
-            data = {'exists': False}
 
         # Return the data to the frontend
         return Response(data, status=status.HTTP_200_OK)

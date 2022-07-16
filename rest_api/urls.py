@@ -2,7 +2,7 @@
 from django.urls import path
 from django.urls.conf import include
 from rest_framework.routers import DefaultRouter
-from .views import clientProjectGet, clientsCRUD, logsCRUD, projectsCRUD, tagsCRUD, doesTagExist, generateReport, getAllLogs
+from .views import clientProjectGet, clientsCRUD, logsCRUD, projectsCRUD, tagsCRUD, generateReport, getAllLogs
 
 # Don't put app name as it causes errors
 
@@ -25,8 +25,6 @@ urlpatterns = [
     path('CRUD/', include(router.urls)),
     # URL to get all clients and projects
     path('clientProjectGet/', clientProjectGet.as_view()),
-    # URL to see if tag exists
-    path('doesTagExist/', doesTagExist.as_view()),
     # URL to generate reports
     path('generateReport/', generateReport.as_view()),
     # URL to get all logs
