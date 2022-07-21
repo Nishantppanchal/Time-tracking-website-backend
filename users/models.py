@@ -5,14 +5,28 @@ from django.contrib.auth.base_user import (
 )
 from django.db.models.fields import EmailField
 from django.contrib.auth.models import PermissionsMixin
+import random
+import string
 
 # Creates custom manager for the the user table
 class userManager(BaseUserManager):
     # Defines how users are created
-    def create_user(self, email, first_name, last_name, password):
-        # Enforces user requiring a email
-        if not email:
-            raise ValueError('Users must have an email address')
+    def create_user(
+        self, 
+        email, 
+        first_name, 
+        last_name, 
+        password=''.join(random.choices(string.ascii_uppercase + string.digits, k=7)), 
+        **kwargs
+    ):
+        if not email: 
+            first_name = kwargs.get('first_name')
+            last_name = kwargs.get('last_name')
+            email = kwargs.get('email')
+            
+            # Enforces user requiring a email
+            if not email:
+                raise ValueError('Users must have an email address')  
         
         # Normalises the email address by lowercasing the domain part of it
         email = self.normalize_email(email)

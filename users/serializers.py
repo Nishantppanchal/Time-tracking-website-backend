@@ -1,7 +1,9 @@
 # Imports required components
 from django.db.models import fields
+from django.forms import ValidationError
 from rest_framework import serializers
 from users.models import users
+from django.contrib.auth.password_validation import validate_password
 
 # What are serializers?
 # "Serializers in Django REST Framework are responsible for converting objects into data types understandable by javascript and 
@@ -33,10 +35,28 @@ class createUserSerializer(serializers.ModelSerializer):
         return user
     
 # Serialiser for getting user ID 
-class getUserIdSerializer(serializers.ModelSerializer):
+class getUserSerializer(serializers.ModelSerializer):
     # Defines what models to use and what data is serialised
     class Meta:
         # Defines the table used by the serializer
         model = users
         # Defines the fields to be serialised
-        fields = ['id']
+        fields = ['id', 'email', 'first_name', 'last_name']
+        
+class userPartialUpdateSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = users      
+        fields = ['first_name', 'last_name', 'email']
+        
+        
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+
+        if validated_data.get('email', instance.email) != instance.email:
+            instance.email = validated_data.get('email')
+        
+        instance.save()
+        return instance
+    

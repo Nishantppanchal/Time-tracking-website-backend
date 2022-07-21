@@ -1,16 +1,20 @@
 # Import required components
+from cmath import acos
+from email import message
+import email
 from django.http import request
 import rest_framework
 from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
-from .serializers import createUserSerializer, getUserIdSerializer
+from .serializers import createUserSerializer, getUserSerializer, userPartialUpdateSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework.response import Response
 from users.models import users
+from rest_framework import viewsets
 
 # View for creating user
 class customUserCreate(APIView):
@@ -34,11 +38,11 @@ class customUserCreate(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # View for getting user id   
-class getUserId(generics.ListAPIView):
+class getUser(generics.ListAPIView):
     # Requires authentication to access this endpoint
     permission_classes = [IsAuthenticated]
     # Sets the serializer
-    serializer_class = getUserIdSerializer
+    serializer_class = getUserSerializer
     
     # Customizes what data is retrieved
     def get_queryset(self):
@@ -50,3 +54,47 @@ class getUserId(generics.ListAPIView):
         
         # Returns the user's data
         return userData
+    
+class userPartialUpdate(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = userPartialUpdateSerializer
+    
+    def get_object(self):
+        email = self.request.user
+        return users.objects.get(email=email)
+        
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        user = request.user
+        print(request.headers)
+        if str(user) == data.get('email', None):
+            del data['email']
+        # elif users.objects.filter(email=data.get('email', '')).len() > 0:
+            
+        
+        
+        serializer = self.serializer_class(user, data=data, partial=True)
+        
+        if serializer.is_valid():
+            self.perform_update(serializer)
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+        return Response(serializer.errors, status=status.HTTP_200_OK)
+            
+class changePassword(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+    
+        try:
+            newPassword = request.data['new_password']
+        except:
+            return Response({ message: 'new_password field required' }, status=status.HTTP_400_BAD_REQUEST)
+    
+        if user.check_password(newPassword):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        user.set_password(newPassword)
+        user.save()
+        return Response(status=status.HTTP_202_ACCEPTED)

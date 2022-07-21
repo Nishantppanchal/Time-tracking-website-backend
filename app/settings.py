@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wvu5xz7_-_ka#x6bb4r8h(mb(z&6b#=&^vxjwo@sjnjqybrgxg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['time-tracking-django.herokuapp.com', 'time-tracking-reactjs.herokuapp.com', 'localhost', '127.0.0.1'] # change in production
 
@@ -174,8 +173,14 @@ AUTH_USER_MODEL = 'users.users'
 
 # Defines authenication library used for authenication backends
 AUTHENTICATION_BACKENDS = (
-   'rest_framework_social_oauth2.backends.DjangoOAuth2',
-   'django.contrib.auth.backends.ModelBackend',
+    # Google OAuth2
+    'social_core.backends.google.GoogleOAuth2',
+    
+    # django-rest-framework-social-oauth2
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    
+    # Django
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # Sets the authenication settings
@@ -185,6 +190,18 @@ OAUTH2_PROVIDER = {
     'REFRESH_TOKEN_EXPIRE_SECONDS': 86400,
     'REFRESH_TOKEN_GRACE_PERIOD_SECONDS': 0,
 }
+
+# Google configuration
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '882178549685-e4268tfenq2mp847gnlotukmmkt9v13f.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.given_name',
+    'https://www.googleapis.com/auth/userinfo.family_name',
+]
+SOCIAL_AUTH_GOOGLE_OAUTH2_USER_FIELDS = ['first_name', 'last_name', 'email']
 
 # Need to use cron to run python manage.py cleartokens on server
 # in production https://stackoverflow.com/questions/31507211/how-to-restrict-django-rest-framework-browsable-api-interface-to-admin-users
