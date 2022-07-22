@@ -33,7 +33,7 @@ class logsCRUD(viewsets.ModelViewSet):
             # Sets the start log to the integer number
             start = int(number)
             # Sets the end log to the integer number + 100
-            end = int(number) + 2
+            end = int(number) + 25
             # Gets the index of the last log (start from zero)
             count = logs.objects.filter(user=user).count() - 1
 
